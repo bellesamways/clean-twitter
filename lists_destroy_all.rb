@@ -3,7 +3,7 @@ require 'dotenv'
 
 Dotenv.load
 
-MAX_REQUESTS = 100
+MAX_REQUESTS = 80
 
 # Duplique o arquivo .env-sample e renomeie para .env
 # Insira as suas chaves e outras configs

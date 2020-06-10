@@ -3,7 +3,7 @@ require 'dotenv'
 
 Dotenv.load
 
-MAX_REQUESTS = 100
+MAX_REQUESTS = 80
 
 # Duplique o arquivo .env-sample e renomeie para .env
 # Insira as suas chaves e outras configs
@@ -22,11 +22,11 @@ end
 def create_lists
   client = twitter_client
 
-  verified_handles = client.create_list(ENV['NAME_LIST_VERIFIED'], options = {:mode => 'private'})
+  @verified_handles = client.create_list(ENV['NAME_LIST_VERIFIED'], options = {:mode => 'private'})
 
-  not_followed_me = client.create_list(ENV['NAME_LIST_NOT_FOLLOWED_ME'], options = {:mode => 'private'})
+  @not_followed_me = client.create_list(ENV['NAME_LIST_NOT_FOLLOWED_ME'], options = {:mode => 'private'})
 
-  followed_me = client.create_list(ENV['NAME_LIST_FOLLOWED_ME'], options = {:mode => 'private'})
+  @followed_me = client.create_list(ENV['NAME_LIST_FOLLOWED_ME'], options = {:mode => 'private'})
 end
 
 # Esse método percorre todos os friends e insere nas listas correspondentes. Você deve passar como parâmetro o seu arroba do twitter como string
@@ -45,18 +45,18 @@ def all_friends_and_lists(twitter_username)
   
     # Verificamos se o friend é um arroba verificado no twitter, se sim insere na lista de verificados e no arquivo de texto
     if f.verified?
-      client.add_list_member(verified_handles, f) 
+      client.add_list_member(@verified_handles, f) 
       File.write("verified_handles.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
     end
 
     # Verificamos o relacionamento entre você e o friend. Se ele te seguir, incluimos na lista dos que te seguem
     if client.friendship(f, ENV['YOUR_HANDLE_TWITTER']).target.followed_by?
-      client.add_list_member(followed_me, f)
+      client.add_list_member(@followed_me, f)
       File.write("followed_me.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
     
     # se o friend não te seguir e não for uma arroba verificada, colocamos nessa lista de que não te seguem. (o ! é a negação)
     elsif !client.friendship(f, ENV['YOUR_HANDLE_TWITTER']).target.followed_by? && !f.verified?
-      client.add_list_member(not_followed_me, f)
+      client.add_list_member(@not_followed_me, f)
       File.write("not_followed_me.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
     end
 
