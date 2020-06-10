@@ -61,12 +61,13 @@ def all_friends_and_lists(twitter_username)
     end
 
     # Imprime qual é o número de requests que estamos e itera mais um
+    # se você rodar esse código em uma VM, comente a linha abaixo
     puts requests
     requests += 1
 
     # Verifica se o número de requests é maior ou igual que o número máximo de requests e insere um sleep de 15 minutos para evitar o erro de TooManyRequests do Twitter
     if requests >= MAX_REQUESTS
-      puts "sleeping for 15 minutes"
+      puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos rodando o método all_friends_and_lists."
       sleep(900)
       requests = 0
     end
@@ -79,15 +80,16 @@ def unfollow_friends(list)
 
   client.list_members(list).each do |m|
     client.unfollow(m)
-    File.write("unfollow_list.txt", "Nome da lista: #{list.name} | ID: #{m.id} | Arroba: #{m.screen_name}\n", mode: "a")
+    File.write("unfollow_list.txt", "ID: #{m.id} | Arroba: #{m.screen_name}\n", mode: "a")
 
     # Imprime qual é o número de requests que estamos e itera mais um
+    # se você rodar esse código em uma VM, comente a linha abaixo
     puts requests
     requests += 1
 
     # Verifica se o número de requests é maior ou igual que o número máximo de requests e insere um sleep de 15 minutos para evitar o erro de TooManyRequests do Twitter
     if requests >= MAX_REQUESTS
-      puts "sleeping for 15 minutes"
+      puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos rodando o método unfollow_friends."
       sleep(900)
       requests = 0
     end
@@ -107,12 +109,13 @@ def after_friends(twitter_username)
     File.write("after_friends.txt", "#{f.id}\n", mode: "a")
 
     # Imprime qual é o número de requests que estamos e itera mais um
+    # se você rodar esse código em uma VM, comente a linha abaixo
     puts requests
     requests += 1
 
     # Verifica se o número de requests é maior ou igual que o número máximo de requests e insere um sleep de 15 minutos para evitar o erro de TooManyRequests do Twitter
     if requests >= MAX_REQUESTS
-      puts "sleeping for 15 minutes"
+      puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos rodando o método after_friends."
       sleep(900)
       requests = 0
     end
@@ -125,24 +128,27 @@ create_lists
 # chama o método de listas os friends
 all_friends_and_lists(ENV['YOUR_HANDLE_TWITTER'])
 
-# imprime o número de friends que você incluiu naquele array
-puts "O número de friends que você tem no momento é #{all_friends.count}"
+# inclui o número de friends que você incluiu naquele array, dentro do arquivo results
+File.write("results.txt", "O número de friends que você tem em #{Time.now} é #{all_friends.count}.\n", mode: "a")
 
 # chama o método de unfollow por listas
-# unfollow_friends(not_followed_me)
+unfollow_friends(@not_followed_me)
 
 # se você quiser dar unfollow em mais listas, descomente as linhas abaixo (não esqueça de sempre colocar um sleep entre cada chamada de método)
 
+# puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos esperando para rodar o método unfollow_friends."
 # sleep(900)
-# unfollow_friends(followed_me)
+# unfollow_friends(@followed_me)
 
-# sleep(900)
-# unfollow_friends(verified_handles)
+puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos esperando para rodar o método unfollow_friends."
+sleep(900)
+unfollow_friends(@verified_handles)
 
 # se você quiser saber quantos friends ficaram, descomente as linhas abaixo
 
+# puts "Sleep por 15 minutes a partir de #{Time.now}. Estamos esperando para rodar o método after_friends."
 # sleep(900)
 # after_friends(ENV['YOUR_HANDLE_TWITTER'])
-# puts "O número de friends que você tem no momento é #{after_friends.count}"
+# File.write("results.txt", "O número de friends que você tem em #{Time.now} é #{after_friends.count}.\n", mode: "a")
 # number_accounts = all_friends.count - after_friends.count
-# puts "Você deu unfollow em #{number_accounts} contas."
+# File.write("results.txt", "Você deu unfollow em #{number_accounts} contas.\n", mode: "a")
