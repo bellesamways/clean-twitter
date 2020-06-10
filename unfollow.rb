@@ -20,6 +20,8 @@ end
 
 # Esse método cria as três listas que vamos trabalhar
 def create_lists
+  client = twitter_client
+
   verified_handles = client.create_list(ENV['NAME_LIST_VERIFIED'], options = {:mode => 'private'})
 
   not_followed_me = client.create_list(ENV['NAME_LIST_NOT_FOLLOWED_ME'], options = {:mode => 'private'})
@@ -127,7 +129,7 @@ all_friends_and_lists(ENV['YOUR_HANDLE_TWITTER'])
 puts "O número de friends que você tem no momento é #{all_friends.count}"
 
 # chama o método de unfollow por listas
-unfollow_friends(not_followed_me)
+# unfollow_friends(not_followed_me)
 
 # se você quiser dar unfollow em mais listas, descomente as linhas abaixo (não esqueça de sempre colocar um sleep entre cada chamada de método)
 
