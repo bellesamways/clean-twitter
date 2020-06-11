@@ -50,20 +50,20 @@ def all_friends_and_lists(twitter_username)
   
     # Verificamos se o friend é um arroba verificado no twitter, se sim insere na lista de verificados e no arquivo de texto
     if f.verified?
-      client.add_list_member(@verified_handles, f) 
+      client.add_list_member(@verified_handles, f) rescue Twitter::Error::Forbidden
       File.write("verified_handles.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
       File.write("logs.txt", "Incluído a conta @#{f.screen_name} na lista #{@verified_handles.name} em #{Time.now}.\n", mode: "a")
     end
 
     # Verificamos o relacionamento entre você e o friend. Se ele te seguir, incluimos na lista dos que te seguem
     if client.friendship(f, ENV['YOUR_HANDLE_TWITTER']).target.followed_by?
-      client.add_list_member(@followed_me, f)
+      client.add_list_member(@followed_me, f) rescue Twitter::Error::Forbidden
       File.write("followed_me.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
       File.write("logs.txt", "Incluído a conta @#{f.screen_name} na lista #{@followed_me.name} em #{Time.now}.\n", mode: "a")
     
     # se o friend não te seguir e não for uma arroba verificada, colocamos nessa lista de que não te seguem. (o ! é a negação)
     elsif !client.friendship(f, ENV['YOUR_HANDLE_TWITTER']).target.followed_by? && !f.verified?
-      client.add_list_member(@not_followed_me, f)
+      client.add_list_member(@not_followed_me, f) rescue Twitter::Error::Forbidden
       File.write("not_followed_me.txt", "ID: #{f.id} | Arroba: #{f.screen_name}\n", mode: "a")
       File.write("logs.txt", "Incluído a conta @#{f.screen_name} na lista #{@not_followed_me.name} em #{Time.now}.\n", mode: "a")
     end
@@ -92,7 +92,7 @@ def unfollow_friends(list)
   rodadas = 1
 
   client.list_members(list).each do |m|
-    client.unfollow(m)
+    client.unfollow(m) rescue Twitter::Error::Forbidden
     File.write("unfollow_list.txt", "ID: #{m.id} | Arroba: #{m.screen_name}\n", mode: "a")
     File.write("logs.txt", "", mode: "a")
 
