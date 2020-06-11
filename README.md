@@ -5,16 +5,14 @@ Esse é um script em **ruby 2.6.5**.
 ## O que o unfollow.rb faz
 
 - Pega todas as contas que você segue;
-- Separa em listas (dentro do próprio twitter) de contas verificadas, contas que você segue e não te seguem e contas que você segue e eles segue de volta.
-- Para chamar a lista que você quer dar unfollow, na linha 130, o parâmetro a ser passado é o objeto da lista. Por exemplo:
+- Separa em listas (dentro do próprio twitter) de contas **verificadas**, contas que **você segue e não te seguem** e contas que **você segue e eles segue de volta**;
+- Para chamar a lista que você quer dar unfollow, o parâmetro a ser passado é o objeto da lista. Por exemplo:
 
 ```ruby
 unfollow_friends(verificados)
 ```
 
-- Para chamar mais de uma lista, descomente o código das linhas 134 a 138.
-
-- Quando você cria uma lista com as contas, mesmo que dê unfollow, elas não sairão da lista. Portanto, caso você de unfollow sem querer, ainda é possível dar follow de novo.
+- Quando você cria uma lista com as contas, mesmo que dê unfollow, elas não sairão da lista. Portanto, caso você de unfollow sem querer, ainda é possível dar follow de novo;
 
 - Caso você tenha muitas contas que você segue, uma opção é subir esse código em uma VM e executar nela, assim não ocupa processamento do seu PC e você pode deixar rodando por mais tempo (por conta do limite do twitter). Cada sleep é de 15 minutos a cada 100 requisições.
 
