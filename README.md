@@ -22,7 +22,7 @@ Esse é um script em **ruby 2.6.5**.
 ## O que o lists_destroy_all.rb faz
 
 - Ele exclui todas as listas que você é o dono.
-- *Todos os logs de execução estarão no arquivo logs.txt.*
+- *Todos os logs de execução estarão no arquivo `logs.txt`.*
 
 ## Instalação
 
