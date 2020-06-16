@@ -2,25 +2,27 @@
 
 Esse é um script em **ruby 2.6.5**.
 
-## O que o unfollow.rb faz
+## O que o friends.rb faz
 
 - Pega todas as contas que você segue;
-- Separa em listas (dentro do próprio twitter) de contas **verificadas**, contas que **você segue e não te seguem** e contas que **você segue e eles segue de volta**;
-- Para chamar a lista que você quer dar unfollow, o parâmetro a ser passado é o objeto da lista. Por exemplo:
-
-```ruby
-unfollow_friends(verificados)
-```
-
-- Quando você cria uma lista com as contas, mesmo que dê unfollow, elas não sairão da lista. Portanto, caso você de unfollow sem querer, ainda é possível dar follow de novo;
-
-- Caso você tenha muitas contas que você segue, uma opção é subir esse código em uma VM e executar nela, assim não ocupa processamento do seu PC e você pode deixar rodando por mais tempo (por conta do limite do twitter). Cada sleep é de 15 minutos a cada 100 requisições.
-
+- Salva em um txt algumas informações das contas que você segue;
+- Cada sleep é de 15 minutos a cada 80 requisições (ele faz 2 ou 3 requisições para o twitter enquanto esse código roda);
 - O código gera alguns arquivos em .txt para validação das contas que você mexeu. Todos os arquivos ficarão na raiz do projeto. PS: *Caso você tenha que rodar mais de uma vez o código, lembre-se de deletar os arquivos antes.*
+- *Todos os logs de execução estarão no arquivo `logs.txt`.*
+
+## O que o unfollow.rb faz
+
+- Depois de rodar o `friends.rb`, você salvou todos os seus friends no arquivo `all_friends_ids.txt`;
+- Você vai ter salvo todos os seus friends nesse txt, então nesse método você vai escolher em quem vai dar unfollow;
+- Se você colocar 1, ele será colocado na lista de unfollow, se colocar 2 não será colocado em lista alguma e se escolher 3, será colocado na lista de não decididos;
+- Após fazer todas as escolhas, o método unfollow_friends irá rodar automaticamente pegando todos os friends que você colocou na lista de unfollow e dando unfollow em cada um;
+- Uma nova lista de log será gerada no arquivo `unfollow_friends`.
+- *Todos os logs de execução estarão no arquivo `logs.txt`.*
 
 ## O que o lists_destroy_all.rb faz
 
 - Ele exclui todas as listas que você é o dono.
+- *Todos os logs de execução estarão no arquivo logs.txt.*
 
 ## Instalação
 
@@ -61,13 +63,20 @@ Copie o conteúdo do arquivo `.env-sample` e crie um novo arquivo `.env` com as 
 
 Dentro da pasta do projeto, no terminal, rode:
 
-- Para fazer o unfollow:
+- Para pegar todos os amigos e colocar na lista de friends:
+
+```bash
+ruby friends.rb
+```
+
+- Para fazer o unfollow (depois de rodar o friends.rb):
 
 ```bash
 ruby unfollow.rb
 ```
 
 - Para excluir as listas:
+
 ```bash
 ruby lists_destroy_all.rb
 ```
