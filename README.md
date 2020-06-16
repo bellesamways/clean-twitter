@@ -16,7 +16,7 @@ Esse é um script em **ruby 2.6.5**.
 - Você vai ter salvo todos os seus friends nesse txt, então nesse método você vai escolher em quem vai dar unfollow;
 - Se você colocar 1, ele será colocado na lista de unfollow, se colocar 2 não será colocado em lista alguma e se escolher 3, será colocado na lista de não decididos;
 - Após fazer todas as escolhas, o método unfollow_friends irá rodar automaticamente pegando todos os friends que você colocou na lista de unfollow e dando unfollow em cada um;
-- Uma nova lista de log será gerada no arquivo `unfollow_friends`.
+- Uma nova lista de log será gerada no arquivo `unfollow_friends.txt`.
 - *Todos os logs de execução estarão no arquivo `logs.txt`.*
 
 ## O que o lists_destroy_all.rb faz
