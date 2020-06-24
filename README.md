@@ -87,4 +87,4 @@ Dependendo da quantidade de contas que você segue, pode levar pouco ou muito te
 
 Para dúvidas, abra uma issue ou me chame no [twitter](https://twitter.com/bellesamways). Se você usou o script, [me marca no twitter](https://twitter.com/bellesamways)!
 
-Se quiser me pagar um café pelo trabalho: [Picpay](https://picpay.me/isabelle.samways)
+Se quiser me pagar um café pelo trabalho: [Picpay](https://picpay.me/bellesamways)
